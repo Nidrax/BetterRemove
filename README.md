@@ -1,19 +1,59 @@
 # BetterRemove - `rm` made better
-It always annoys me that I have to either use the `rmdir` command or `-d` flag for the `rm` command to remove a directory... or yet another `-r` flag to delete it if it's not empty. Otherwise the command will just print an error and exit.
+BetterRemove aims to be a replacement for the `rm` command, with a more user-friendly approach to
+removing files and directories.
 
-This obnoxious behaviour is being justified by alleged "safety", since accidentally deleting one file is less painful than deleting an entire directory with all of its contents, so the command requires the additional hassle of using of an additional flag to make sure you actually _mean_ it.
+First of all, the app doesn't bother differentiating if the provided path is a file or an empty directory.
+It will remove it without any prompt, because... who really cares about the difference?
 
-But you know what also is secure and is a valid way of making sure the user wants to delete a directory? ***Asking the user!*** A simple yes/no prompt solves the issue without the need to repeat the command with a proper flag added.
+When the directory is empty, instead of having to re-type the entire command with a right recursive flag,
+the user is prompted to confirm the removal of the directory and its contents.
 
 ## But... why does this even exist?
-This could be of course be mostly solved by a simple shell script/function, but where is the fun in that? I also seemed it as an opportunity to pick up on Rust, so here it is: an app that probably nobody needed besides me and nobody asked for.
+This could be of course be mostly solved by a simple shell script/function, but where is the fun in that?
+I also seemed it as an opportunity to pick up on Rust, so here it is: an app that probably nobody asked for
+nor needed besides me.
 
 ## How to use it
-It's dead-ass simple. Just type `br [FILE or DIRECTORY to remove]`. The application by default removes files and empty directories with no prompt. If trying to remove a driectory that contains files, you will be prompted, asking if you want to continue.
+It's pretty simple and analogous to the `rm` command.
+Just type `br [OPTION]... [FILE or DIRECTORY]...`.
 
-A serie of other flags can be used:
+The application by default removes files and empty directories with no prompt. 
+If trying to remove a directory that contains files without providing the `-r` flag beforehand,
+the user will be prompted, asking if they want to continue.
 
-* `-f`, `--force` – removes non-empty directories without prompt, ignores nonexistent files or aguments.
-* `-R`, `--no-preserve-root` – does not treat the root directory `/` nor any system-important directory specially (check the table of protected directories). If not used, user will be prompted to explicitly confirm the removal. 
+A series of flags can be used:
+
+* `-d`, `--dir` – unused. Kept for compatibility with `rm`.
+* `-f`, `--force` – ignores nonexistent files or arguments.
+* `-r`, `-R` `--recursive` – removes directories and their contents recursively without prompting.
+* `-s`, `--shred` – overwrite the file (or file contents of a directory) before removing it to make it
+  harder to recover. Ignored in case of empty directories.
 * `-v`, `--verbose` – print what is being done.
-* `-V`, `--version` – output version information and exit
+
+
+* `-i` – prompt before every removal.
+* `-I` – prompt once before removing more than three files, or when removing recursively.
+  Less intrusive than `-i`.
+* `--interactive[=WHEN]` – prompt according to WHEN: never, once (-I), or always (-i).
+  Without WHEN, it is equivalent to `-i`.
+
+
+* `--one-file-system` – when removing a hierarchy, skip any directory that is on a file system different
+  from that of the corresponding command line argument.
+* `-N`, `--no-preserve-root` – does not treat the root directory `/` nor any system-important directory
+  specially (check the table of protected directories). If not used, user will be prompted to explicitly
+  confirm the removal.
+* `-P`, `--preserve-root[=all]` – do not remove '/' nor any system-important directory (default);
+  with 'all', reject any command line argument on a separate device from its parent.
+
+
+* `-h`, `--help` – display this help and exit.
+* `-V`, `--version` – output version information and exit.
+
+
+To remove a file whose name starts with a `-`, for example
+`-foo`, use one of these commands:
+
+    br -- -foo
+    br ./-foo
+
