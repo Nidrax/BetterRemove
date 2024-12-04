@@ -25,7 +25,7 @@ A series of flags can be used:
 
 * `-d`, `--dir` – unused. Kept for compatibility with `rm`.
 * `-f`, `--force` – ignores nonexistent files or arguments.
-* `-r`, `-R` `--recursive` – removes directories and their contents recursively without prompting.
+* `-r`, `-R`, `--recursive` – removes directories and their contents recursively without prompting.
 * `-s`, `--shred` – overwrite the file (or file contents of a directory) before removing it to make it
   harder to recover. Ignored in case of empty directories.
 * `-v`, `--verbose` – print what is being done.
