@@ -23,29 +23,14 @@ the user will be prompted, asking if they want to continue.
 
 A series of flags can be used:
 
-* `-d`, `--dir` – unused. Kept for compatibility with `rm`.
-* `-f`, `--force` – ignores nonexistent files or arguments.
-* `-r`, `-R`, `--recursive` – removes directories and their contents recursively without prompting.
+* `-r`, `--recursive` – doesn't prompt for confirmation when provided directory is not empty.
 * `-s`, `--shred` – overwrite the file (or file contents of a directory) before removing it to make it
   harder to recover. Ignored in case of empty directories.
 * `-v`, `--verbose` – print what is being done.
 
-
-* `-i` – prompt before every removal.
-* `-I` – prompt once before removing more than three files, or when removing recursively.
-  Less intrusive than `-i`.
-* `--interactive[=WHEN]` – prompt according to WHEN: never, once (-I), or always (-i).
-  Without WHEN, it is equivalent to `-i`.
-
-
-* `--one-file-system` – when removing a hierarchy, skip any directory that is on a file system different
-  from that of the corresponding command line argument.
 * `-N`, `--no-preserve-root` – does not treat the root directory `/` nor any system-important directory
   specially (check the table of protected directories). If not used, user will be prompted to explicitly
   confirm the removal.
-* `-P`, `--preserve-root[=all]` – do not remove '/' nor any system-important directory (default);
-  with 'all', reject any command line argument on a separate device from its parent.
-
 
 * `-h`, `--help` – display this help and exit.
 * `-V`, `--version` – output version information and exit.
