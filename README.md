@@ -13,6 +13,10 @@ This could be of course be mostly solved by a simple shell script/function, but 
 I also seemed it as an opportunity to pick up on Rust, so here it is: an app that probably nobody asked for
 nor needed besides me.
 
+## Installation
+Download the latest release from the [releases page](https://github.com/Nidrax/BetterRemove/releases) or
+build it yourself by downloading the source code and running `cargo install --path .` in the project's root.
+
 ## How to use it
 It's pretty simple and analogous to the `rm` command.
 Just type `br [OPTION]... [FILE or DIRECTORY]...`.
