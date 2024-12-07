@@ -6,7 +6,7 @@ removing files and directories.
 First of all, the app doesn't bother differentiating if the provided path is a file or an empty directory.
 It will remove it without any prompt, because... who really cares about the difference?
 
-When the directory is empty, instead of having to re-type the entire command with a right recursive flag,
+When the directory is not empty, instead of having to re-type the entire command with a right recursive flag,
 the user is prompted to confirm the removal of the directory and its contents.
 
 ## But... why does this even exist?
