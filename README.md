@@ -10,17 +10,17 @@ When the directory is not empty, instead of having to re-type the entire command
 the user is prompted to confirm the removal of the directory and its contents.
 
 ## But... why does this even exist?
-This could be of course be mostly solved by a simple shell script/function, but where is the fun in that?
-I also seemed it as an opportunity to pick up on Rust, so here it is: an app that probably nobody asked for
-nor needed besides me.
+This could be, of course, mostly solved by a simple shell function, but where is the fun in that?
+I also considered it an opportunity to learn some Rust, so here it is: an app that probably nobody besides me needed nor
+asked for.
 
 ## Installation
 Download the latest release from the [releases page](https://github.com/Nidrax/BetterRemove/releases) or
 build it yourself by downloading the source code and running `cargo install --path .` in the project's root.
 
 ## How to use it
-It's pretty simple and analogous to the `rm` command.
 Just type `br [OPTION]... [FILE or DIRECTORY]...`.
+It's pretty simple and (mostly) analogous to the classic `rm` command, but with less hassle.
 
 The application by default removes files and empty directories with no prompt. 
 If trying to remove a directory that contains files without providing the `-r` flag beforehand,
@@ -34,7 +34,7 @@ A series of flags can be used:
 * `-v`, `--verbose` – print what is being done.
 
 * `-N`, `--no-preserve-root` – does not treat the root directory `/` nor any system-important directory
-  specially (check the table of protected directories). If not used, user will be prompted to explicitly
+  specially (check the list of [protected directories](#protected-directories)). If not used, user will be prompted to explicitly
   confirm the removal.
 
 * `-h`, `--help` – display this help and exit.
@@ -49,3 +49,35 @@ To remove a file whose name starts with a `-`, for example
 
 <img src="https://github.com/Nidrax/BetterRemove/blob/trunk/screenshot.png?raw=true" alt="br showcase">
 
+## Protected directories
+The following directories are protected by default
+and require the user to confirm the removal if the `-N` flag is not provided:
+
+* `/`
+* `/bin`
+* `/boot`
+* `/dev`
+* `/etc`
+* `/home`
+* `/lib`
+* `/lib64`
+* `/media`
+* `/mnt`
+* `/opt`
+* `/proc`
+* `/root`
+* `/run`
+* `/sbin`
+* `/srv`
+* `/sys`
+* `/tmp`
+* `/usr`
+* `/var`
+
+Also, when on Windows or anywhere in the `/mnt` or `/media`, the following directories are protected:
+
+* `./Program Files`
+* `./Program Files (x86)`
+* `./ProgramData`
+* `./Users`
+* `./Windows`
