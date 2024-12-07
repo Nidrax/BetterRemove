@@ -33,22 +33,6 @@ fn print_help(prog_name: &str)
              "--no-preserve-root".cyan());
 }
 
-fn check_permission(path: &str) -> io::Result<()>
-{
-    match fs::metadata(path)
-    {
-        Ok(metadata) => {
-            if metadata.permissions().readonly()
-            {
-                return Err(io::Error::new(io::ErrorKind::PermissionDenied, "Permission denied"));
-            }
-        },
-        Err(e) => return Err(e),
-    }
-
-    Ok(())
-}
-
 fn check_root(path: &str) -> u8
 {
     //check if running on windows
@@ -131,12 +115,6 @@ fn shred_recursive(path: &str, verbose: Option<bool>) -> io::Result<()>
 
 fn remove(opts: &ArgOptions, path: &str, prog_name: &str) -> io::Result<()>
 {
-    if check_permission(path).is_err()
-    {
-        println!("{}: {} '{}': Permission denied", prog_name.green(), "cannot remove".red(), path.red());
-        return Err(io::Error::new(io::ErrorKind::PermissionDenied, "Permission denied"));
-    }
-
     if !is_dir(path)
     {
         if opts.shred
