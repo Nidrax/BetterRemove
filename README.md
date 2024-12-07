@@ -1,4 +1,5 @@
 # BetterRemove - `rm` made better
+
 BetterRemove aims to be a replacement for the `rm` command, with a more user-friendly approach to
 removing files and directories.
 
@@ -45,4 +46,6 @@ To remove a file whose name starts with a `-`, for example
 
     br -- -foo
     br ./-foo
+
+<img src="https://github.com/Nidrax/BetterRemove/blob/trunk/screenshot.png?raw=true" alt="br showcase">
 
