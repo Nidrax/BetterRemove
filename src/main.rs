@@ -113,7 +113,7 @@ fn shred_recursive(path: &str, verbose: Option<bool>) -> io::Result<()>
     Ok(())
 }
 
-fn remove(opts: &ArgOptions, path: &str, prog_name: &str) -> io::Result<()>
+fn remove(opts: &ArgOptions, path: &str) -> io::Result<()>
 {
     if !is_dir(path)
     {
@@ -130,7 +130,8 @@ fn remove(opts: &ArgOptions, path: &str, prog_name: &str) -> io::Result<()>
     }
     else
     {
-        if check_root(path) == 1 && !opts.preserve_root
+        let is_root = check_root(path);
+        if is_root == 1 && opts.preserve_root
         {
             println!("{} '{}' {}",
                      "Directory".yellow(), path.red(), "is a special system directory!".yellow());
@@ -139,13 +140,25 @@ fn remove(opts: &ArgOptions, path: &str, prog_name: &str) -> io::Result<()>
                      "and most probably WILL".yellow(), "break your system".red());
             println!("Do you understand the consequences of your actions and want to continue with it? {}",
                      "(y/n)".cyan());
+            let mut input = String::new();
+            io::stdin().read_line(&mut input)?;
+            if input.trim() != "y"
+            {
+                return Ok(());
+            }
         }
-        else if check_root(path) == 2
+        else if is_root == 2
         {
             println!("It looks like you're trying to remove a system directory on a Windows file system.");
             println!("This most probably {}.", "will break your Windows installation".red());
             println!("Do you understand what you're about to do and do you want to continue? {}",
                      "(y/n)".cyan());
+            let mut input = String::new();
+            io::stdin().read_line(&mut input)?;
+            if input.trim() != "y"
+            {
+                return Ok(());
+            }
         }
 
         if is_empty_dir(path)
@@ -224,7 +237,7 @@ fn main() -> io::Result<()>
 
     for file in opts.files.iter()
     {
-        remove(&opts, file, prog_name)?;
+        remove(&opts, file)?;
     }
 
     Ok(())
