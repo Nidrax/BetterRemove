@@ -36,7 +36,7 @@ fn print_help(prog_name: &str)
 fn check_root(path: &str) -> u8
 {
     //check if running on windows
-    if cfg!(windows) || path.starts_with("/mnt")
+    if cfg!(windows) || path.starts_with("/mnt") || path.starts_with("/media")
     {
         if rootdirs::WIN_DIRS.contains_key(path)
         {
